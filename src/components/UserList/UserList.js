@@ -8,6 +8,7 @@ import * as S from "./style";
 
 const UserList = ({ users, isLoading }) => {
   const [hoveredUserId, setHoveredUserId] = useState();
+  const [filters, SetFilters] = useState([])
 
   const handleMouseEnter = (index) => {
     setHoveredUserId(index);
@@ -17,13 +18,30 @@ const UserList = ({ users, isLoading }) => {
     setHoveredUserId();
   };
 
+  const toggleCountry = (countryCode) => {
+    let tempArr = [...filters];
+    let index = tempArr.indexOf(countryCode);
+    let isChecked;
+
+    if(index === -1) {
+      tempArr.push(countryCode);
+      isChecked = false;
+    } else {
+      tempArr.splice(index, 1);
+      isChecked = true;
+    }
+
+    SetFilters(tempArr);
+    return isChecked;
+  };
+
   return (
     <S.UserList>
       <S.Filters>
-        <CheckBox value="BR" label="Brazil" />
-        <CheckBox value="AU" label="Australia" />
-        <CheckBox value="CA" label="Canada" />
-        <CheckBox value="DE" label="Germany" />
+        <CheckBox toggle={() => toggleCountry("BR")} value="BR" label="Brazil" />
+        <CheckBox toggle={() => toggleCountry("AU")} value="AU" label="Australia" />
+        <CheckBox toggle={() => toggleCountry("CA")} value="CA" label="Canada" />
+        <CheckBox toggle={() => toggleCountry("DE")} value="DE" label="Germany" />
       </S.Filters>
       <S.List>
         {users.map((user, index) => {
