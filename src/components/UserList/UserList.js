@@ -42,6 +42,7 @@ const UserList = ({ users, isLoading }) => {
         <CheckBox toggle={() => toggleCountry("AU")} value="AU" label="Australia" />
         <CheckBox toggle={() => toggleCountry("CA")} value="CA" label="Canada" />
         <CheckBox toggle={() => toggleCountry("DE")} value="DE" label="Germany" />
+        <CheckBox toggle={() => toggleCountry("IE")} value="IE" label="Ireland" />
       </S.Filters>
       <S.List>
         {users.map((user, index) => {
