@@ -8,7 +8,8 @@ import * as S from "./style";
 
 const UserList = ({ users, isLoading }) => {
   const [hoveredUserId, setHoveredUserId] = useState();
-  const [filters, SetFilters] = useState([])
+  const [filters, SetFilters] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
   const handleMouseEnter = (index) => {
     setHoveredUserId(index);
@@ -33,6 +34,28 @@ const UserList = ({ users, isLoading }) => {
 
     SetFilters(tempArr);
     return isChecked;
+  };
+
+  useEffect(() => {
+    const data = localStorage.getItem("favorites");
+    if(data) {
+      setFavorites(JSON.parse(data));
+    }
+  }, []);
+
+  const handleFavorite = (user) => {
+    let tempArr = favorites;
+    let index = tempArr.indexOf(user);
+
+    if(index === -1) {
+      tempArr.push(user);
+    } else {
+      tempArr.splice(index, 1);
+    }
+
+    setFavorites(tempArr);
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+    console.log(favorites);
   };
 
   return (
@@ -66,9 +89,9 @@ const UserList = ({ users, isLoading }) => {
                     {user?.location.city} {user?.location.country}
                   </Text>
                 </S.UserInfo>
-                <S.IconButtonWrapper isVisible={index === hoveredUserId}>
+                <S.IconButtonWrapper isVisible={index === hoveredUserId || favorites.indexOf(user) !== -1}>
                   <IconButton>
-                    <FavoriteIcon color="error" />
+                    <FavoriteIcon color="error" onClick={() => handleFavorite(user)} />
                   </IconButton>
                 </S.IconButtonWrapper>
               </S.User>
