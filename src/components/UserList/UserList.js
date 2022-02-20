@@ -44,7 +44,7 @@ const UserList = ({ users, isLoading }) => {
   }, []);
 
   const handleFavorite = (user) => {
-    let tempArr = favorites;
+    let tempArr = favorites.slice();
     let index = tempArr.indexOf(user);
 
     if(index === -1) {
@@ -54,8 +54,7 @@ const UserList = ({ users, isLoading }) => {
     }
 
     setFavorites(tempArr);
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-    console.log(favorites);
+    localStorage.setItem("favorites", JSON.stringify(tempArr));
   };
 
   return (
