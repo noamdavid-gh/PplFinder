@@ -5,8 +5,9 @@ import CheckBox from "components/CheckBox";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import * as S from "./style";
+import {Waypoint} from 'react-waypoint';
 
-const UserList = ({ users, isLoading }) => {
+const UserList = ({ users, isLoading, fetchMore }) => {
   const [hoveredUserId, setHoveredUserId] = useState();
   const [filters, SetFilters] = useState([]);
   const [favorites, setFavorites] = useState([]);
@@ -70,30 +71,35 @@ const UserList = ({ users, isLoading }) => {
         {users.map((user, index) => {
           if(filters.length === 0 || filters.indexOf(user.nat) !== -1) {
             return (
-              <S.User
-                key={index}
-                onMouseEnter={() => handleMouseEnter(index)}
-                onMouseLeave={handleMouseLeave}
-              >
-                <S.UserPicture src={user?.picture.large} alt="" />
-                <S.UserInfo>
-                  <Text size="22px" bold>
-                    {user?.name.title} {user?.name.first} {user?.name.last}
-                  </Text>
-                  <Text size="14px">{user?.email}</Text>
-                  <Text size="14px">
-                    {user?.location.street.number} {user?.location.street.name}
-                  </Text>
-                  <Text size="14px">
-                    {user?.location.city} {user?.location.country}
-                  </Text>
-                </S.UserInfo>
-                <S.IconButtonWrapper isVisible={index === hoveredUserId || favorites.indexOf(user) !== -1}>
-                  <IconButton>
-                    <FavoriteIcon color="error" onClick={() => handleFavorite(user)} />
-                  </IconButton>
-                </S.IconButtonWrapper>
-              </S.User>
+              <>
+                <S.User
+                  key={index}
+                  onMouseEnter={() => handleMouseEnter(index)}
+                  onMouseLeave={handleMouseLeave}
+                >
+                  <S.UserPicture src={user?.picture.large} alt="" />
+                  <S.UserInfo>
+                    <Text size="22px" bold>
+                      {user?.name.title} {user?.name.first} {user?.name.last}
+                    </Text>
+                    <Text size="14px">{user?.email}</Text>
+                    <Text size="14px">
+                      {user?.location.street.number} {user?.location.street.name}
+                    </Text>
+                    <Text size="14px">
+                      {user?.location.city} {user?.location.country}
+                    </Text>
+                  </S.UserInfo>
+                  <S.IconButtonWrapper isVisible={index === hoveredUserId || favorites.indexOf(user) !== -1}>
+                    <IconButton>
+                      <FavoriteIcon color="error" onClick={() => handleFavorite(user)} />
+                    </IconButton>
+                  </S.IconButtonWrapper>
+                </S.User>
+                {index === users.length - 10 && (
+                   <Waypoint onEnter={() => {fetchMore()}} />
+                )}
+              </>
             );
           }
         })}
