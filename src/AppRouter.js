@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { Home } from "pages";
 import { ThemeProvider } from "theme";
@@ -8,6 +8,12 @@ import Text from "./components/Text";
 import MapPage from "pages/MapPage/MapPage";
 
 const AppRouter = () => {
+  useEffect(() => {
+    localStorage.setItem("users", JSON.stringify([]));
+    localStorage.setItem("favorites", JSON.stringify([]));
+  }, []);
+  
+
   return (
     <ThemeProvider>
       <Router>
