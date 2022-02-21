@@ -3,14 +3,13 @@ import Text from "../../components/Text";
 import * as S from "./style";
 import IconButton from "@material-ui/core/IconButton";
 import FavoriteIcon from "@material-ui/icons/Favorite";
-import reactDom from "react-dom";
 
-const Favorites = (props) => {
+const Favorites = () => {
   const [favorites, setFavorites] = useState(JSON.parse(localStorage.getItem("favorites")));
 
   const handleFavorite = (user) => {
     let tempArr = favorites.slice();
-    let index = tempArr.indexOf(user);
+    const index = favoriteIndex(user.login.uuid);
 
     if(index === -1) {
       tempArr.push(user);
@@ -21,7 +20,20 @@ const Favorites = (props) => {
     setFavorites(tempArr);
     localStorage.setItem("favorites", JSON.stringify(tempArr));
   };
-  
+
+  const favoriteIndex = (uuid) => {
+    let index = 0;
+    let favIndex = -1;
+
+    favorites.map(user => {
+      if(user.login.uuid === uuid) {
+        favIndex = index;
+      }
+      ++index;
+    });
+
+    return favIndex;
+  }
 
   return (
     <>

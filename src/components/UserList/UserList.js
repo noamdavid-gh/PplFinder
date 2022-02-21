@@ -46,7 +46,7 @@ const UserList = ({ users, isLoading, fetchMore }) => {
 
   const handleFavorite = (user) => {
     let tempArr = favorites.slice();
-    let index = tempArr.indexOf(user);
+    const index = favoriteIndex(user.login.uuid);
 
     if(index === -1) {
       tempArr.push(user);
@@ -57,6 +57,20 @@ const UserList = ({ users, isLoading, fetchMore }) => {
     setFavorites(tempArr);
     localStorage.setItem("favorites", JSON.stringify(tempArr));
   };
+
+  const favoriteIndex = (uuid) => {
+    let index = 0;
+    let favIndex = -1;
+
+    favorites.map(user => {
+      if(user.login.uuid === uuid) {
+        favIndex = index;
+      }
+      ++index;
+    });
+
+    return favIndex;
+  }
 
   return (
     <S.UserList>
@@ -90,7 +104,7 @@ const UserList = ({ users, isLoading, fetchMore }) => {
                       {user?.location.city} {user?.location.country}
                     </Text>
                   </S.UserInfo>
-                  <S.IconButtonWrapper isVisible={index === hoveredUserId || favorites.indexOf(user) !== -1}>
+                  <S.IconButtonWrapper isVisible={index === hoveredUserId || favoriteIndex(user.login.uuid) !== -1}>
                     <IconButton>
                       <FavoriteIcon color="error" onClick={() => handleFavorite(user)} />
                     </IconButton>
