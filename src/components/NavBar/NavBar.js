@@ -22,6 +22,7 @@ const NavBar = () => {
       >
         <Tab label="Home" to="/" component={Link} />
         <Tab label="Favorites" to="/favorites" component={Link} />
+        <Tab label="Map" to="/map" component={Link} />
       </Tabs>
     </AppBar>
   );
