@@ -9,8 +9,12 @@ import MapPage from "pages/MapPage/MapPage";
 
 const AppRouter = () => {
   useEffect(() => {
-    localStorage.setItem("users", JSON.stringify([]));
-    localStorage.setItem("favorites", JSON.stringify([]));
+    if(!localStorage.getItem("users")) {
+      localStorage.setItem("users", JSON.stringify([]));
+    }
+    if(!localStorage.getItem("favorites")) {
+      localStorage.setItem("favorites", JSON.stringify([]));
+    }
   }, []);
   
 
