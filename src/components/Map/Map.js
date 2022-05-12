@@ -19,27 +19,27 @@ const options = {
 }
 
 function Map() {
-    const [users, setUsers] = useState([]);
-    const [selectedUser, setSelectedUser] = useState(null);
+    // const [users, setUsers] = useState([]);
+    // const [selectedUser, setSelectedUser] = useState(null);
 
-    useEffect(() => {
-        const data = localStorage.getItem("users");
-        if(data) {
-            setUsers(JSON.parse(data));
-        }
-    }, []);
+    // useEffect(() => {
+    //     const data = localStorage.getItem("users");
+    //     if(data) {
+    //         setUsers(JSON.parse(data));
+    //     }
+    // }, []);
     
 
-    const {isLoaded, loadError} = useLoadScript({
-        googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
-        libraries,
-      });
+    // const {isLoaded, loadError} = useLoadScript({
+    //     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
+    //     libraries,
+    //   });
     
-      if(loadError) return "Error loading maps";
-      if(!isLoaded) return "Loading Maps";
+    //   if(loadError) return "Error loading maps";
+    //   if(!isLoaded) return "Loading Maps";
     
       return <div>
-          <MapTitle>
+          {/* <MapTitle>
             <h1 class="map-title">PplFinder <span role="img" aria-label="people">👥</span></h1>
           </MapTitle>
           <GoogleMap mapContainerStyle={mapContainerStyle} zoom={2.7} center={center} options={options}>
@@ -72,7 +72,8 @@ function Map() {
                     </div>
                 </InfoWindow>
               )}
-          </GoogleMap>
+          </GoogleMap> */}
+          <h1>Disabled Feature</h1>
       </div>
 }
 
